@@ -39,19 +39,15 @@ Special attention was given to graceful connection shutdown patterns, including 
 
 ## Features
 
-- **TCP Server**:
-    - Listens on port 1234 (configurable)
-    - Logs new connections with client details
-    - Echoes all received messages back to client
-    - Gracefully closes connection on receiving "q" command
-    - Sends "CLOSE" notification before termination
+    Client → Server Messages
+        Receives and logs all client messages
+        Echoes messages back to client (unchanged)
+        Closes connection on "q" command (graceful shutdown)
 
-- **TCP Client**:
-    - Connects to localhost:1234
-    - Interactive terminal interface
-    - Displays server responses
-    - Automatically closes on server termination signal
-    - Handles connection termination events
+    Server → Client Messages
+        Type directly in the server terminal to send messages to all connected clients
+        Messages are transmitted in real-time
+        Maintains existing connection handling
 
 ## Installation
 
@@ -70,13 +66,12 @@ This client-server application requires **two separate terminal windows** to fun
 
 ```bash
 ┌─────────────────────┐    ┌─────────────────────┐
-│    TERMINAL 1       │    │    TERMINAL 2       │
-│    SERVER           │    │    CLIENT           │
+│    SERVER TERMINAL  │    │    CLIENT TERMINAL  │
 ├─────────────────────┤    ├─────────────────────┤
 │ npm run server      │    │ npm run client      │
 │                     │    │                     │
-│ Listening on        │    │ Connected!          │
-│ 127.0.0.1:1234      │    │ Type messages below │
+│ Type server→client  │    │ Receives server msgs│
+│ messages here       │    │ and vice versa      │
 └─────────────────────┘    └─────────────────────┘
 ```
 
@@ -101,8 +96,8 @@ This client-server application requires **two separate terminal windows** to fun
     Hello
     ```
   - Both terminals should show:
-    - Server logs: `data: Hello`
-    - Client shows: `Server says: server: Hello`
+    - Server logs: `cliente: Hello`
+    - Client shows: `Server: Hello`
 
 4. **Test Graceful Shutdown**:
   - In **Terminal 2 (Client)**, type:
